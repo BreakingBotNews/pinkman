@@ -65,7 +65,6 @@ function subscribeWebhook() {
     });
 }
 
-
 function sendTextMessage(sender, text) {
     var messageData = {
         text: text
