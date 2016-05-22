@@ -36,5 +36,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-#IDE stuff
+# IDE stuff
 .idea/
+
+# Config
+config/config.json
