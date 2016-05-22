@@ -1,0 +1,5 @@
+Remove comments before using.
+
+{
+  "fb_token": "" // Facebook Page Access Token
+}
