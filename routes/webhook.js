@@ -1,20 +1,15 @@
-/*
- * node_modules
- */
 var express = require('express');
-var request = require("request");
+var request = require('request');
 var router = express.Router();
 
-/*
- * Custom
- */
 var config = require('../config/config');
-var l = require('../utilities/lib/logUtils');
+var l = require('../utilities/logUtils');
+var firebase = require('../utilities/firebase/users');
 
 var fb_token = config.fb_token;
 
 
-// On server start subscribe webhook.
+// On server start subscribe to webhook.
 subscribeWebhook();
 
 
@@ -39,7 +34,7 @@ router.post('/api/v1/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text;
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
-
+            firebase.writeUserMessage(sender, text);
         }
     }
     res.sendStatus(200);

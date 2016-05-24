@@ -4,10 +4,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var firebase = require('./utilities/firebase/firebaseRef');
+
+
 /*
  * Routes
  */
 var webhook = require('./routes/webhook');
+
 
 /*
  * Express Stuff
