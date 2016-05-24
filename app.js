@@ -4,18 +4,25 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
+/**
+ * Require utilities.
+ */
+
 var firebase = require('./utilities/firebase/firebaseRef');
 
 
-/*
- * Routes
+/**
+ * Require routes.
  */
+
 var webhook = require('./routes/webhook');
 
 
-/*
- * Express Stuff
+/**
+ * Express stuff.
  */
+
 var app = express();
 
 app.use(logger('dev'));
@@ -26,18 +33,18 @@ app.use(cookieParser());
 app.use('/', webhook);
 
 
-/*
+/**
  * Error handling.
  */
 
-// Catch 404 and Forward to Error Handler.
+// Catch 404 and forward to error handler.
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-// Development Error Handler.
+// Development error handler.
 if (app.get('env') === 'development') {
     app.use(function (err, req, res) {
         res.status(err.status || 500);
@@ -48,7 +55,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-// Production Error Handler.
+// Production error handler.
 app.use(function (err, req, res) {
     res.status(err.status || 500);
     res.render('error', {

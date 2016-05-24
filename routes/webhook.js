@@ -14,21 +14,23 @@ const fb_verify_token = config.fb_verify_token;
 subscribeWebhook();
 
 
-/*
+/**
  * Routes
  */
 
-/* Setup messenger webhook. */
+// Setup Messenger webhook.
 router.get('/api/v1/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] === fb_verify_token) {
         res.send(req.query['hub.challenge']);
     }
+
     res.send('Error, wrong Facebook validation token.');
 });
 
-/* Get messages */
+//Get messages.
 router.post('/api/v1/webhook/', function (req, res) {
     var messaging_events = req.body.entry[0].messaging;
+
     for (var i = 0; i < messaging_events.length; i++) {
         var event = req.body.entry[0].messaging[i];
         var sender = event.sender.id;
@@ -39,14 +41,16 @@ router.post('/api/v1/webhook/', function (req, res) {
             firebase.writeUserMessage(sender, text);
         }
     }
+
     res.sendStatus(200);
 });
 
 
-/*
+/**
  * Functions
  */
 
+// Subscribe to the Facebook Messenger webhook.
 function subscribeWebhook() {
     request({
         url: 'https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=' + fb_page_access_token,
@@ -62,6 +66,7 @@ function subscribeWebhook() {
     });
 }
 
+// Send message to user.
 function sendTextMessage(sender, text) {
     var messageData = {
         text: text

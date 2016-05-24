@@ -3,7 +3,7 @@ var l = require('../logUtils');
 var firebase = require('firebase');
 
 
-/*
+/**
  * Here we initilize firebase and export the database connection.
  */
 
