@@ -6,10 +6,11 @@ var config = require('../config/config');
 var l = require('../utilities/logUtils');
 var firebase = require('../utilities/firebase/users');
 
-var fb_token = config.fb_token;
+const fb_page_access_token = config.fb_page_access_token;
+const fb_verify_token = config.fb_verify_token;
 
 
-// On server start subscribe to webhook.
+// On server start subscribe to Facebook Messenger webhook.
 subscribeWebhook();
 
 
@@ -19,21 +20,22 @@ subscribeWebhook();
 
 /* Setup messenger webhook. */
 router.get('/api/v1/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'blue_sky') {
+    if (req.query['hub.verify_token'] === fb_verify_token) {
         res.send(req.query['hub.challenge']);
     }
-    res.send('Error, wrong validation fb_token');
+    res.send('Error, wrong Facebook validation token.');
 });
 
 /* Get messages */
 router.post('/api/v1/webhook/', function (req, res) {
-    messaging_events = req.body.entry[0].messaging;
-    for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i];
-        sender = event.sender.id;
+    var messaging_events = req.body.entry[0].messaging;
+    for (var i = 0; i < messaging_events.length; i++) {
+        var event = req.body.entry[0].messaging[i];
+        var sender = event.sender.id;
+
         if (event.message && event.message.text) {
             text = event.message.text;
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
+            sendTextMessage(sender, 'Text received, echo: ' + text.substring(0, 200));
             firebase.writeUserMessage(sender, text);
         }
     }
@@ -47,7 +49,7 @@ router.post('/api/v1/webhook/', function (req, res) {
 
 function subscribeWebhook() {
     request({
-        url: 'https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=' + fb_token,
+        url: 'https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=' + fb_page_access_token,
         method: 'POST'
     }, function (error, response) {
         if (error) {
@@ -55,7 +57,7 @@ function subscribeWebhook() {
         } else if (response.body.error) {
             l.d('Error: ', response.body.error);
         } else {
-            l.d('Subscribed to Webhook.');
+            l.d('Subscribed to Facebook Webhook.');
         }
     });
 }
@@ -66,13 +68,13 @@ function sendTextMessage(sender, text) {
     };
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: fb_token},
+        qs: {access_token: fb_page_access_token},
         method: 'POST',
         json: {
             recipient: {id: sender},
-            message: messageData,
+            message: messageData
         }
-    }, function (error, response, body) {
+    }, function (error, response) {
         if (error) {
             l.d('Error sending message: ', error);
         } else if (response.body.error) {

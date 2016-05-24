@@ -14,7 +14,7 @@ firebase.initializeApp({
 
 l.d('Firebase initilized.');
 
-var database = firebase.database();
+const database = firebase.database();
 
 
 module.exports = database;
