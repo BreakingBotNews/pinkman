@@ -4,7 +4,7 @@ var router = express.Router();
 
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
-var firebaseUsers = require('../api/controllers/FirebaseUsersX');
+var firebaseUsers = require('../api/controllers/FirebaseUsers');
 
 const fb_page_access_token = config.fb_page_access_token;
 const fb_verify_token = config.fb_verify_token;
