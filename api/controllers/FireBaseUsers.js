@@ -1,4 +1,4 @@
-var firebase = require('./firebaseRef');
+var firebase = require('./FirebaseDatabase');
 
 
 /*

@@ -9,14 +9,12 @@ var bodyParser = require('body-parser');
  * Require utilities.
  */
 
-var firebase = require('./utilities/firebase/firebaseRef');
-
 
 /**
  * Require routes.
  */
 
-var webhook = require('./routes/webhook');
+var webhook = require('./routes/messenger');
 
 
 /**

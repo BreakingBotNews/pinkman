@@ -1,10 +1,10 @@
 var config = require('../../config/config');
-var l = require('../logUtils');
+var l = require('../../utilities/logUtils');
 var firebase = require('firebase');
 
 
 /**
- * Here we initilize firebase and export the database connection.
+ * Here we initilize firebaseUsers and export the database connection.
  */
 
 firebase.initializeApp({

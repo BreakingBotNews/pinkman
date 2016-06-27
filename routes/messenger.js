@@ -4,7 +4,7 @@ var router = express.Router();
 
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
-var firebase = require('../utilities/firebase/users');
+var firebaseUsers = require('../api/controllers/FirebaseUsers');
 
 const fb_page_access_token = config.fb_page_access_token;
 const fb_verify_token = config.fb_verify_token;
@@ -38,7 +38,7 @@ router.post('/api/v1/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text;
             sendTextMessage(sender, 'Text received, echo: ' + text.substring(0, 200));
-            firebase.writeUserMessage(sender, text);
+            firebaseUsers.writeUserMessage(sender, text);
         }
     }
 
