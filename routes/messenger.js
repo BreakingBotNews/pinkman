@@ -5,6 +5,8 @@ var router = express.Router();
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
 var firebaseUsers = require('../api/controllers/FirebaseUsers');
+var firebaseNews = require('../api/controllers/FirebaseNews');
+
 
 const fb_page_access_token = config.fb_page_access_token;
 const fb_verify_token = config.fb_verify_token;
@@ -37,8 +39,16 @@ router.post('/api/v1/webhook/', function (req, res) {
 
         if (event.message && event.message.text) {
             text = event.message.text;
-            sendTextMessage(sender, 'Text received, echo: ' + text.substring(0, 200));
-            firebaseUsers.writeUserMessage(sender, text);
+            reply = "";
+            if (text == "News!") { //send latest news to user
+                firebaseNews.getLatestNews(sender, "test");
+            }
+            else { //unknown command
+                reply = 'I do not understand this: ' + text.substring(0, 200);
+                sendTextMessage(sender, reply);
+                firebaseUsers.writeUserMessage(sender, text);
+            }
+
         }
     }
 
@@ -87,5 +97,6 @@ function sendTextMessage(sender, text) {
         }
     });
 }
+
 
 module.exports = router;
