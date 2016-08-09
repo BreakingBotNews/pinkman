@@ -6,6 +6,8 @@ var config = require('../config/config');
 var l = require('../utilities/logUtils');
 var firebaseUsers = require('../api/controllers/FirebaseUsers');
 var firebaseNews = require('../api/controllers/FirebaseNews');
+var sendMessage = require('../api/controllers/SendMessages');
+
 
 
 const fb_page_access_token = config.fb_page_access_token;
@@ -45,7 +47,7 @@ router.post('/api/v1/webhook/', function (req, res) {
             }
             else { //unknown command
                 reply = 'I do not understand this: ' + text.substring(0, 200);
-                sendTextMessage(sender, reply);
+                sendMessage.sendTextMessage(sender, reply);
                 firebaseUsers.writeUserMessage(sender, text);
             }
 
@@ -75,28 +77,5 @@ function subscribeWebhook() {
         }
     });
 }
-
-// Send message to user.
-function sendTextMessage(sender, text) {
-    var messageData = {
-        text: text
-    };
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: fb_page_access_token},
-        method: 'POST',
-        json: {
-            recipient: {id: sender},
-            message: messageData
-        }
-    }, function (error, response) {
-        if (error) {
-            l.d('Error sending message: ', error);
-        } else if (response.body.error) {
-            l.d('Error: ', response.body.error);
-        }
-    });
-}
-
 
 module.exports = router;
