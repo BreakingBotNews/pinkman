@@ -7,6 +7,7 @@ var l = require('../utilities/logUtils');
 var firebaseUsers = require('../api/controllers/FirebaseUsers');
 var firebaseNews = require('../api/controllers/FirebaseNews');
 var sendMessage = require('../api/controllers/SendMessages');
+var watchNews = require('../api/controllers/ContinuousNewsDelivery');
 
 
 
@@ -77,5 +78,7 @@ function subscribeWebhook() {
         }
     });
 }
+
+watchNews.watchNews();
 
 module.exports = router;
