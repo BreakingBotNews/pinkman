@@ -43,6 +43,25 @@ router.post('/api/v1/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             var text = event.message.text;
             var reply = "";
+            /*
+            * ** Pseudocode **
+            * if text in arrayUniversalKeywords
+            * else get scenario of user
+            *   do something
+            * if scenario == welcomestep1
+            * send welcomemessage
+            * if scneario == ...
+            *
+            * Scenarios:
+            * - Welcome
+            * - Settings
+            * - Top Stories
+            * - Summary
+            * - Instant Update
+            * - Instant Update Setup
+            * - Feedback
+            *
+            * */
             switch(text) {
                 case "news":
                 case "News!":
