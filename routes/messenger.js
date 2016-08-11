@@ -41,8 +41,8 @@ router.post('/api/v1/webhook/', function (req, res) {
         var sender = event.sender.id;
 
         if (event.message && event.message.text) {
-            text = event.message.text;
-            reply = "";
+            var text = event.message.text;
+            var reply = "";
             if (text == "News!") { //send latest news to user
                 firebaseNews.getLatestNews(sender, "test");
             }
