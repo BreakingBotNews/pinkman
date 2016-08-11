@@ -44,8 +44,8 @@ router.post('/api/v1/webhook/', function (req, res) {
             var text = event.message.text;
             var reply = "";
             switch(text) {
+                case "news":
                 case "News!":
-                case "News":
                 case "What's new":
                     firebaseNews.getLatestNews(sender, "test");
                     break;
