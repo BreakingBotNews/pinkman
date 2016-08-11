@@ -1,8 +1,9 @@
 var firebase = require('./FirebaseDatabase');
 var messenger = require('../../routes/messenger');
-var sendMessage = require('./SendMessages');
+var firebaseUsers = require('./FirebaseUsers');
 
-var spamTeam = ["10154376941170628","1043117445737068","928596807267143"];
+
+//["10154376941170628","1043117445737068","928596807267143"];
 
 /*
  * All relevant operations related to news in firebase
@@ -17,9 +18,7 @@ module.exports = {
         ref.orderByKey().limitToLast(3).on("child_added", function(snapshot, prevChildKey) {
             var news = snapshot.val();
             //console.log(news.headline + ' ' + news.shortUrl)
-            for (number in spamTeam) {
-                sendMessage.sendTextMessage(spamTeam[number], news.headline + ' ' + news.shortUrl)
-            }
+            firebaseUsers.pushActiveUsers(news.headline + ' ' + news.shortUrl)
         });
     }
 };

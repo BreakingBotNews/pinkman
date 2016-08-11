@@ -70,7 +70,17 @@ router.post('/api/v1/webhook/', function (req, res) {
                     break;
                 case "start":
                 case "Start":
-                    reply = 'You are now subscribed to all new articles. (not working)';
+                    reply = 'You are now subscribed to all new articles.';
+                    firebaseUsers.saveUserPref(sender, 'paused', false);
+                    sendMessage.sendTextMessage(sender, reply);
+                    firebaseUsers.writeUserMessage(sender, text);
+                    break;
+                case "stop":
+                case "Stop":
+                case "STOP":
+                case "halt":
+                    reply = "Sorry. You won’t get any messages from me until you write ‘start'.";
+                    firebaseUsers.saveUserPref(sender, 'paused', true);
                     sendMessage.sendTextMessage(sender, reply);
                     firebaseUsers.writeUserMessage(sender, text);
                     break;
