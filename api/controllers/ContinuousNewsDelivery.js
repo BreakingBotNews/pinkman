@@ -2,7 +2,7 @@ var firebase = require('./FirebaseDatabase');
 var messenger = require('../../routes/messenger');
 var sendMessage = require('./SendMessages');
 
-var spamTeam = ["10154376941170628","1043117445737068","928596807267143"]
+var spamTeam = ["10154376941170628","1043117445737068","928596807267143"];
 
 /*
  * All relevant operations related to news in firebase
