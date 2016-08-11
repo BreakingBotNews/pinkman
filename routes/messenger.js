@@ -43,15 +43,23 @@ router.post('/api/v1/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             var text = event.message.text;
             var reply = "";
-            if (text == "News!") { //send latest news to user
-                firebaseNews.getLatestNews(sender, "test");
+            switch(text) {
+                case "News!":
+                case "News":
+                case "What's new":
+                    firebaseNews.getLatestNews(sender, "test");
+                    break;
+                case "start":
+                case "Start":
+                    reply = 'You are now subscribed to all new articles. (not working)';
+                    sendMessage.sendTextMessage(sender, reply);
+                    firebaseUsers.writeUserMessage(sender, text);
+                    break;
+                default:
+                    reply = 'I do not understand this: ' + text.substring(0, 200);
+                    sendMessage.sendTextMessage(sender, reply);
+                    firebaseUsers.writeUserMessage(sender, text);
             }
-            else { //unknown command
-                reply = 'I do not understand this: ' + text.substring(0, 200);
-                sendMessage.sendTextMessage(sender, reply);
-                firebaseUsers.writeUserMessage(sender, text);
-            }
-
         }
     }
 
