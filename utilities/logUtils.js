@@ -10,7 +10,7 @@ module.exports = {
     d: function (input) {
         console.log(input.toString());
 
-        fs.appendFile('log.txt', input.toString()+'\n', function (err) {
+        fs.appendFile('log.txt', new Date().toString() + ': ' + input.toString()+'\n', function (err) {
         });
     }
 };

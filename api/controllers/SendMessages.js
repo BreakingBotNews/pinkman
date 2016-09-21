@@ -8,7 +8,7 @@ const fb_verify_token = config.fb_verify_token;
 // Send message to user.
 module.exports = {
     sendTextMessage: function(sender, text) {
-        l.d("Nachricht gesendet an: " + sender);
+        l.d("Nachricht gesendet an " + sender + ": " + text);
         var messageData = {
             text: text
         };

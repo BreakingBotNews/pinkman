@@ -40,6 +40,7 @@ router.post('/api/v1/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             var text = event.message.text;
             var reply = "";
+            l.d('Nachricht empfangen von '+ sender + ': ' +text);
             /*
             * ** Pseudocode **
             * if text in arrayUniversalKeywords
@@ -94,11 +95,10 @@ router.post('/api/v1/webhook/', function (req, res) {
 
 router.post('/internalApi/webhook/article',function (req, res) {
     if(req.error){
-        console.log("error in internalAPI webhook route");
+        l.d("error in internalAPI webhook route");
         res.json({message:"error"});
     }
     var result = req.body;
-    console.log(result);
     res.json({message:"success"});
 
     sendMessage.sendTextMessage(result.fbId, result.headline);
