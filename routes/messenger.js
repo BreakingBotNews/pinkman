@@ -95,6 +95,17 @@ router.post('/api/v1/webhook/', function (req, res) {
     res.sendStatus(200);
 });
 
+router.post('/internalApi/webhook/article',function (req, res) {
+    if(req.error){
+        console.log("error in internalAPI webhook route");
+        res.json({message:"error"});
+    };
+    var result = req.body;
+
+    console.log(req.body);
+    res.json({message:"success"});
+});
+
 
 /**
  * Functions
