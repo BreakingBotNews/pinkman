@@ -5,7 +5,6 @@ var router = express.Router();
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
 var sendMessage = require('../api/controllers/SendMessages');
-var watchNews = require('../api/controllers/ContinuousNewsDelivery');
 
 
 
@@ -64,28 +63,28 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case "news":
                 case "News!":
                 case "What's new":
-                    firebaseNews.getLatestNews(sender, "test");
+                    //firebaseNews.getLatestNews(sender, "test");
                     break;
                 case "start":
                 case "Start":
                     reply = 'You are now subscribed to all new articles.';
-                    firebaseUsers.saveUserPref(sender, 'paused', false);
+                    //firebaseUsers.saveUserPref(sender, 'paused', false);
                     sendMessage.sendTextMessage(sender, reply);
-                    firebaseUsers.writeUserMessage(sender, text);
+                    //firebaseUsers.writeUserMessage(sender, text);
                     break;
                 case "stop":
                 case "Stop":
                 case "STOP":
                 case "halt":
                     reply = "Sorry. You won’t get any messages from me until you write ‘start'.";
-                    firebaseUsers.saveUserPref(sender, 'paused', true);
+                    //firebaseUsers.saveUserPref(sender, 'paused', true);
                     sendMessage.sendTextMessage(sender, reply);
-                    firebaseUsers.writeUserMessage(sender, text);
+                    //firebaseUsers.writeUserMessage(sender, text);
                     break;
                 default:
                     reply = 'I do not understand this: ' + text.substring(0, 200);
                     sendMessage.sendTextMessage(sender, reply);
-                    firebaseUsers.writeUserMessage(sender, text);
+                    //firebaseUsers.writeUserMessage(sender, text);
             }
         }
     }
@@ -99,9 +98,10 @@ router.post('/internalApi/webhook/article',function (req, res) {
         res.json({message:"error"});
     }
     var result = req.body;
-
     console.log(result);
     res.json({message:"success"});
+
+    sendMessage.sendTextMessage(result.fbId, result.headline);
 });
 
 
@@ -124,7 +124,5 @@ function subscribeWebhook() {
         }
     });
 }
-
-watchNews.watchNews();
 
 module.exports = router;

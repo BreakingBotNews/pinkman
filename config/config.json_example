@@ -3,6 +3,4 @@ Remove comments before using.
 {
   "fb_page_access_token": "", // Facebook Page Access Token
   "fb_verify_token": "", // Facebook Webhook Verify Token
-  "firebaseDatabaseURL": "", // Firebase Database URL
-  "firebaseStorageBucket": "" // Firebase File Storage Bucket
 }
