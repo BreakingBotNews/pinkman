@@ -4,8 +4,6 @@ var router = express.Router();
 
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
-var firebaseUsers = require('../api/controllers/FirebaseUsers');
-var firebaseNews = require('../api/controllers/FirebaseNews');
 var sendMessage = require('../api/controllers/SendMessages');
 var watchNews = require('../api/controllers/ContinuousNewsDelivery');
 
@@ -99,10 +97,10 @@ router.post('/internalApi/webhook/article',function (req, res) {
     if(req.error){
         console.log("error in internalAPI webhook route");
         res.json({message:"error"});
-    };
+    }
     var result = req.body;
 
-    console.log(req.body);
+    console.log(result);
     res.json({message:"success"});
 });
 
