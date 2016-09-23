@@ -16,7 +16,7 @@ module.exports = {
             },
             fields: reqfields
         };
-        axios.post('http://localhost:8080/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
+        axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
             function (response) {
                 l.d(response.data);
             });

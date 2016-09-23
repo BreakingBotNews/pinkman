@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
+var db = require('../api/controllers/dbRequests');
 
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
@@ -69,7 +70,7 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case "start":
                 case "Start":
                     reply = 'You are now subscribed to all new articles.';
-                    //firebaseUsers.saveUserPref(sender, 'paused', false);
+                    db.saveUserPref(sender, 'active', false);
                     sendMessage.sendTextMessage(sender, reply);
                     //firebaseUsers.writeUserMessage(sender, text);
                     break;
@@ -78,7 +79,7 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case "STOP":
                 case "halt":
                     reply = "Sorry. You won’t get any messages from me until you write ‘start'.";
-                    //firebaseUsers.saveUserPref(sender, 'paused', true);
+                    db.saveUserPref(sender, 'active', true);
                     sendMessage.sendTextMessage(sender, reply);
                     //firebaseUsers.writeUserMessage(sender, text);
                     break;
@@ -100,8 +101,10 @@ router.post('/internalApi/webhook/article',function (req, res) {
     }
     var result = req.body;
     res.json({message:"success"});
+    
+    var reply = result.headline+' \n'+result.shortURL;
 
-    sendMessage.sendTextMessage(result.fbId, result.headline);
+    sendMessage.sendTextMessage(result.fbId, reply);
 });
 
 
