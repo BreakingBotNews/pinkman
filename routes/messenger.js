@@ -70,7 +70,7 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case "start":
                 case "Start":
                     reply = 'You are now subscribed to all new articles.';
-                    db.saveUserPref(sender, 'active', false);
+                    db.saveUserPref(sender, 'breaking', false);
                     sendMessage.sendTextMessage(sender, reply);
                     //firebaseUsers.writeUserMessage(sender, text);
                     break;
@@ -79,7 +79,7 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case "STOP":
                 case "halt":
                     reply = "Sorry. You won’t get any messages from me until you write ‘start'.";
-                    db.saveUserPref(sender, 'active', true);
+                    db.saveUserPref(sender, 'breaking', true);
                     sendMessage.sendTextMessage(sender, reply);
                     //firebaseUsers.writeUserMessage(sender, text);
                     break;
