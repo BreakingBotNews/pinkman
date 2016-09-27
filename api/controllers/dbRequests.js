@@ -11,7 +11,7 @@ function saveUserPref(sender, field, value){
     }
     var obj = {
         update: {
-            condition: sender,
+            condition: "fbId="+sender,
             data: {}
         }
     };
