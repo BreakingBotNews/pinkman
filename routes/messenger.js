@@ -112,11 +112,19 @@ router.post('/internalApi/webhook/article',function (req, res) {
         res.json({message:"error"});
     }
     var result = req.body;
+    var reply;
     res.json({message:"success"});
-    
-    var reply = result.headline+' \n'+result.shortURL;
 
-    sendMessage.sendTextMessage(result.fbId, reply);
+    if(result.template){
+        for (var i=0; i<result.articles.length; i++){
+            reply = result.articles[i].headline+' \n'+result.articles[i].shortURL;
+            sendMessage.sendTextMessage(result.fbId,reply);
+        }
+    }
+    else{
+        reply = result.headline+' \n'+result.shortURL;
+        sendMessage.sendTextMessage(result.fbId, reply);
+    }
 });
 
 
