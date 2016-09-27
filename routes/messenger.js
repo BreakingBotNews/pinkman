@@ -70,6 +70,8 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case 'summary':
                 case 'Summary':
                     db.getSummary(sender,5,function (result) {
+                        result = result.data;
+                        console.log(result);
                         for (var i=0; i<result.length; i++){
                             var reply = result[i].headline+' \n'+result[i].shortURL;
                             sendMessage.sendTextMessage(sender,reply);

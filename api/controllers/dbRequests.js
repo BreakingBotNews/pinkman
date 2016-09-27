@@ -2,6 +2,7 @@ var axios = require('axios');
 var l = require('../../utilities/logUtils');
 
 var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
+var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
 
 function saveUserPref(sender, field, value){
     if(value){
@@ -38,8 +39,8 @@ function getSummary(sender, length, callback) {
             length: length,
             fbId: sender
         }
-    }
-    axios.post(url,obj).then(function (result) {
+    };
+    axios.post(urlArticle,obj).then(function (result) {
         callback(result);
     })
 }
