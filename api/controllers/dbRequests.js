@@ -32,7 +32,20 @@ function writeUserMessage(sender, text){
     })
 }
 
+function getSummary(sender, length, callback) {
+    var obj = {
+        summaryRequest: {
+            length: length,
+            fbId: sender
+        }
+    }
+    axios.post(url,obj).then(function (result) {
+        callback(result);
+    })
+}
+
 module.exports = {
     saveUserPref: saveUserPref,
-    writeUserMessage: writeUserMessage
+    writeUserMessage: writeUserMessage,
+    getSummary: getSummary
 };

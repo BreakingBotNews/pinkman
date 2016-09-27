@@ -65,6 +65,16 @@ router.post('/api/v1/webhook/', function (req, res) {
                 case "news":
                 case "News!":
                 case "What's new":
+                case 'Update':
+                case 'update':
+                case 'summary':
+                case 'Summary':
+                    db.getSummary(sender,5,function (result) {
+                        for (var i=0; i<result.length; i++){
+                            var reply = result[i].headline+' \n'+result[i].shortURL;
+                            sendMessage.sendTextMessage(sender,reply);
+                        }
+                    });
                     //firebaseNews.getLatestNews(sender, "test");
                     break;
                 case "start":
