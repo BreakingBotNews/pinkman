@@ -45,8 +45,55 @@ function getSummary(sender, length, callback) {
     })
 }
 
+function userById(id, fields) {
+    fields = fields || [];
+    var reqfields = [];
+    for(var i = 0; i < fields.length; i++){
+        reqfields.push = fields[i];
+    }
+
+    var reqObj = {
+        query: {
+            condition: "id = " + id
+        },
+        fields: reqfields
+    };
+    axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
+        function (response) {
+            l.d(response.data);
+        });
+}
+
+function userByFbId(id, text, callback) {
+    var reqObj = {
+        query: {
+            condition: "fbid = " + id
+        }
+    };
+    axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
+        function (response) {
+            callback(text, response.data[0]);
+            //console.log(response.data[0]['id'])
+                /*
+                id: 9,
+                fbId: '10154376941170628',
+                firstname: null,
+                lastname: null,
+                age: null,
+                email: null,
+                hometown: null,
+                currentResidenz: null,
+                active: 0,
+                breaking: 0
+                */
+
+});
+}
+
 module.exports = {
     saveUserPref: saveUserPref,
     writeUserMessage: writeUserMessage,
-    getSummary: getSummary
+    getSummary: getSummary,
+    userById: userById,
+    userByFbId: userByFbId
 };
