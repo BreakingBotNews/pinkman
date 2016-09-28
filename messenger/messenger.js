@@ -9,7 +9,7 @@ function received(sender, text) {
 }
 
 function decide(text, user) {
-    l.d('decide for user: ' + user[id]);
+    //l.d('decide for user: ' + user[id]);
     /*if user is new, welcome flow*/
 
     //reply = 'Hi, I  once was a paper boy but got into a time wave. Now I live as an algorithm in the worldwideweb. It would be a pleasure to deliver the latest news stories to you.';
