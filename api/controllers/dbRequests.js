@@ -1,6 +1,7 @@
 var axios = require('axios');
 var l = require('../../utilities/logUtils');
 var messenger = require('../../messenger/messenger');
+var sendMessage = require('./SendMessages');
 
 
 var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
@@ -75,6 +76,8 @@ function userByFbId(id, text) {
     axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
         function (response) {
             console.log(response.data[0]['id']);
+            console.log(text);
+            sendMessage.sendTextMessage(response.data[0]['fbId'], text);
             messenger.decide(text, response.data[0]);
                 /*
                 id: 9,

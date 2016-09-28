@@ -41,7 +41,7 @@ function decide(text, user) {
         case 'update':
         case 'summary':
         case 'Summary':
-            db.getSummary(sender,5,function (result) {
+            db.getSummary(user['fbId'],5,function (result) {
                 result = result.data;
                 console.log(result);
                 for (var i=0; i<result.length; i++){
