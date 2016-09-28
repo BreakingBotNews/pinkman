@@ -1,5 +1,7 @@
 var axios = require('axios');
 var l = require('../../utilities/logUtils');
+var messenger = require('../../messenger/messenger');
+
 
 var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
 var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
@@ -64,7 +66,7 @@ function userById(id, fields) {
         });
 }
 
-function userByFbId(id, text, callback) {
+function userByFbId(id, text) {
     var reqObj = {
         query: {
             condition: "fbid = " + id
@@ -72,8 +74,8 @@ function userByFbId(id, text, callback) {
     };
     axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
         function (response) {
-            console.log(response.data[0]['id'])
-            callback(text, response.data[0]);
+            console.log(response.data[0]['id']);
+            messenger.decide(text, response.data[0]);
                 /*
                 id: 9,
                 fbId: '10154376941170628',
