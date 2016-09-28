@@ -8,7 +8,8 @@ function received(sender, text) {
     db.userByFbId(sender, text);
 }
 
-function decide(text, user) {
+function dodecide(text, user) {
+    console.log("versuche zu entscheiden");
     //l.d('decide for user: ' + user[id]);
     /*if user is new, welcome flow*/
 
@@ -71,5 +72,5 @@ function decide(text, user) {
 
 module.exports = {
     received: received,
-    decide: decide
+    dodecide: dodecide
 };
