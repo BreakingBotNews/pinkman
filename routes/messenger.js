@@ -1,7 +1,8 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-var db = require('../api/controllers/dbRequests');
+var messenger = require('../messenger/messenger');
+
 
 var config = require('../config/config');
 var l = require('../utilities/logUtils');
@@ -33,76 +34,14 @@ router.get('/api/v1/webhook/', function (req, res) {
 //Get messages.
 router.post('/api/v1/webhook/', function (req, res) {
     var messaging_events = req.body.entry[0].messaging;
-
     for (var i = 0; i < messaging_events.length; i++) {
         var event = req.body.entry[0].messaging[i];
         var sender = event.sender.id;
-
         if (event.message && event.message.text) {
             var text = event.message.text;
-            var reply = "";
-            l.d('Nachricht empfangen von '+ sender + ': ' +text);
-            /*
-            * ** Pseudocode **
-            * if text in arrayUniversalKeywords
-            * else get scenario of user
-            *   do something
-            * if scenario == welcomestep1
-            * send welcomemessage
-            * if scneario == ...
-            *
-            * Scenarios:
-            * - Welcome
-            * - Settings
-            * - Top Stories
-            * - Summary
-            * - Instant Update
-            * - Instant Update Setup
-            * - Feedback
-            *
-            * */
-            switch(text) {
-                case "news":
-                case "News!":
-                case "What's new":
-                case 'Update':
-                case 'update':
-                case 'summary':
-                case 'Summary':
-                    db.getSummary(sender,5,function (result) {
-                        result = result.data;
-                        console.log(result);
-                        for (var i=0; i<result.length; i++){
-                            var reply = result[i].headline+' \n'+result[i].shortURL;
-                            sendMessage.sendTextMessage(sender,reply);
-                        }
-                    });
-                    //firebaseNews.getLatestNews(sender, "test");
-                    break;
-                case "start":
-                case "Start":
-                    reply = 'You are now subscribed to all new articles.';
-                    db.saveUserPref(sender, 'breaking', true);
-                    sendMessage.sendTextMessage(sender, reply);
-                    //firebaseUsers.writeUserMessage(sender, text);
-                    break;
-                case "stop":
-                case "Stop":
-                case "STOP":
-                case "halt":
-                    reply = "Sorry. You won’t get any messages from me until you write ‘start'.";
-                    db.saveUserPref(sender, 'breaking', false);
-                    sendMessage.sendTextMessage(sender, reply);
-                    //firebaseUsers.writeUserMessage(sender, text);
-                    break;
-                default:
-                    reply = 'I do not understand this: ' + text.substring(0, 200);
-                    sendMessage.sendTextMessage(sender, reply);
-                    //firebaseUsers.writeUserMessage(sender, text);
+            messenger.received(sender,text)
             }
-        }
     }
-
     res.sendStatus(200);
 });
 
