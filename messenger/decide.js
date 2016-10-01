@@ -36,8 +36,8 @@ function dodecide(text, user) {
         case 'update':
         case 'summary':
         case 'Summary':
-            console.log(user['fbId']);
-            send.summary(user['fbId']);
+            console.log(user['id']);
+            send.summary(user['fbId'],user['id']);
             break;
         case "start":
         case "Start":

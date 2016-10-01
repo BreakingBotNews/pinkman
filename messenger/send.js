@@ -11,7 +11,7 @@ function getSummary(sender, length, callback) {
     var obj = {
         summaryRequest: {
             length: length,
-            fbId: sender
+            id: sender
         }
     };
     axios.post(urlArticle,obj).then(function (result) {
@@ -21,9 +21,9 @@ function getSummary(sender, length, callback) {
     })
 }
 
-function summary(target) {
+function summary(target,id) {
     console.log("getting summary");
-    getSummary(target,5,function (result) {
+    getSummary(id,5,function (result) {
         result = result.data;
         console.log(result);
         for (var i=0; i<result.length; i++){
