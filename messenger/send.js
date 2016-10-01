@@ -2,9 +2,10 @@ var l = require('../utilities/logUtils');
 var db = require('../api/controllers/dbRequests');
 var sendMessage = require('../api/controllers/SendMessages');
 var axios = require('axios');
+var config = require('../config/config.json');
 
-var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
-var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
+var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey='+config.apiKey;
+var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey='+config.apiKey;
 
 function getSummary(sender, length, callback) {
     console.log("Heisenberg, was ist der neue Shizzle?");

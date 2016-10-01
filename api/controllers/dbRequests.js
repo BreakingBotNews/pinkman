@@ -1,9 +1,10 @@
 var axios = require('axios');
 var l = require('../../utilities/logUtils');
 var decide = require('../../messenger/decide');
+var config = require('../config/config.json');
 
-var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
-var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE';
+var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey='+config.apiKey;
+var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey='+config.apiKey;
 
 function saveUserPref(sender, field, value){
     if(value){
@@ -59,7 +60,7 @@ function userById(id, fields) {
         },
         fields: reqfields
     };
-    axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
+    axios.post(url,reqObj).then(
         function (response) {
             l.d(response.data);
         });
@@ -71,7 +72,7 @@ function userByFbId(id, text) {
             condition: "fbid = " + id
         }
     };
-    axios.post('https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey=pK8TyE%26f7PTdu$SkS9jDEETVMkha%26k_xzwV^sGW7FgH3n?DE',reqObj).then(
+    axios.post(url,reqObj).then(
         function (response) {
             //console.log(response.data[0]['id']);
             //console.log(text);
