@@ -34,8 +34,11 @@ function summary(target,id) {
 });}
 
 function subscribe(user, reply) {
+    console.log(user);
+    console.log(db);
     db.saveUserPref(user, 'breaking', true);
-    sendMessage.sendTextMessage(user['fbId'], reply);
+    console.log("Subscribe");
+    sendMessage.sendTextMessage(user, reply);
 }
 
 function stopsubscription(user, reply) {

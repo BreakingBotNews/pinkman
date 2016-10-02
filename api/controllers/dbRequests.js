@@ -1,17 +1,18 @@
 var axios = require('axios');
 var l = require('../../utilities/logUtils');
-var decide = require('../../messenger/decide');
 var config = require('../../config/config.json');
 
 var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey='+config.apiKey;
 var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey='+config.apiKey;
 
 function saveUserPref(sender, field, value){
+    console.log("saveUserPref");
     if(value){
         value = 1;
     }else{
         value = 0;
     }
+    console.log(value);
     var obj = {
         update: {
             condition: "fbId="+sender,
@@ -19,9 +20,11 @@ function saveUserPref(sender, field, value){
         }
     };
     obj.update.data[field] = value;
+    console.log(obj);
     axios.post(url, obj).then(function (result) {
             //l.d(result);
-            l.d('user pref set');
+           // l.d('user pref set');
+        console.log(result);
         })
 }
 
@@ -66,7 +69,7 @@ function userById(id, fields) {
         });
 }
 
-function userByFbId(id, text) {
+function userByFbId(id, callback) {
     var reqObj = {
         query: {
             condition: "fbid = " + id
@@ -74,10 +77,11 @@ function userByFbId(id, text) {
     };
     axios.post(url,reqObj).then(
         function (response) {
+            callback(response);
             //console.log(response.data[0]['id']);
             //console.log(text);
             //sendMessage.sendTextMessage(response.data[0]['fbId'], text);
-            decide.dodecide(text, response.data[0]);
+            //decide.dodecide(text, response.data[0]); //callback
                 /*
                 id: 9,
                 fbId: '10154376941170628',

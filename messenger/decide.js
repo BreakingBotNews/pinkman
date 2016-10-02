@@ -41,6 +41,7 @@ function dodecide(text, user) {
             break;
         case "start":
         case "Start":
+            console.log(user['fbId']);
             reply = 'You are now subscribed to all news!';
             send.subscribe(user['fbId'], reply);
             break;

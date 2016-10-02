@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
  * Require routes.
  */
 
-var webhook = require('./routes/messenger');
+var webhook = require('./routes/routes');
 
 
 /**
