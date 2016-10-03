@@ -4,6 +4,7 @@ var send = require('./send');
 
 function dodecide(text, user) {
     console.log("versuche zu entscheiden, was der user will");
+    var reply;
     //l.d('decide for user: ' + user[id]);
     /*if user is new, welcome flow*/
 
@@ -51,6 +52,19 @@ function dodecide(text, user) {
         case "halt":
             reply = "Sorry. You won’t get any messages from me until you write ‘start'.";
             send.stopsubscription(user['fbId'], reply);
+            break;
+        case "Settings":
+        case "settings":
+            reply = 'Here is the Link to the Settings:';
+            send.settingsUrlGenerator(user, reply);
+            break;
+        case "fbLink":
+        case "facebookLink":
+        case "facebook link":
+        case "link facebook":
+        case "link fb":
+            reply = 'Click this Link to connect to Facebook:';
+            send.fbLinkUrlGenerator(user, reply);
             break;
         default:
             reply = 'I do not understand this: ' + text.substring(0, 200);
