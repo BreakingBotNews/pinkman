@@ -6,6 +6,7 @@ var decide = require('./decide');
 function received(sender, text) {
     l.d('Nachricht empfangen von '+ sender + ': ' +text);
     /*get user from DB*/
+    sendMessage.sendTypingOn(sender);
     db.userByFbId(sender, function (result) {
         decide.dodecide(text, result.data[0]);
     });

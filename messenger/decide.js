@@ -4,7 +4,7 @@ var send = require('./send');
 
 function dodecide(text, user) {
     console.log("versuche zu entscheiden, was der user will");
-    var reply;
+    var reply='';
     //l.d('decide for user: ' + user[id]);
     /*if user is new, welcome flow*/
 

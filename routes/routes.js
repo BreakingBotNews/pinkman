@@ -55,14 +55,16 @@ router.post('/internalApi/webhook/article',function (req, res) {
     res.json({message:"success"});
 
     if(result.template){
-        for (var i=0; i<result.articles.length; i++){
+        sendMessage.sendTemplate(result.articles,result.fbId);
+        /*for (var i=0; i<result.articles.length; i++){
             reply = result.articles[i].headline+' \n'+result.articles[i].shortURL;
             sendMessage.sendTextMessage(result.fbId,reply);
-        }
+        }*/
     }
     else{
-        reply = result.headline+' \n'+result.shortURL;
-        sendMessage.sendTextMessage(result.fbId, reply);
+        sendMessage.sendTemplate([{headline:result.headline,articleURL:result.articleURL,thumbnailURL:result.thumbnailURL,trailText:result.trailText}],result.fbId);
+        /*reply = result.headline+' \n'+result.shortURL;
+        sendMessage.sendTextMessage(result.fbId, reply);*/
     }
 });
 

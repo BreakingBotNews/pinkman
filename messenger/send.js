@@ -7,11 +7,7 @@ function summary(target,id) {
     console.log("getting summary");
     db.getSummary(id,5,function (result) {
         result = result.data;
-        console.log(result);
-        for (var i=0; i<result.length; i++){
-            var reply = result[i].headline+' \n'+result[i].shortURL;
-            sendMessage.sendTextMessage(target,reply);
-        }
+        sendMessage.sendTemplate(result,target);
 });}
 
 function subscribe(user, reply) {
@@ -31,16 +27,14 @@ function fbLinkUrlGenerator(userObj,reply) {
     var url = "http://settings.breakingbot.news/fbLink/fbLink.html?u=";
     url +=userObj['id']+"&s="+cutString(userObj['fbId'].toString());
     
-    reply+="\n"+url;
-    sendMessage.sendTextMessage(userObj['fbId'], reply);
+    sendMessage.sendUrlButton(userObj['fbId'],url,'Connect',reply);
 }
 
 function settingsUrlGenerator(userObj,reply) {
     var url = "http://settings.breakingbot.news?u=";
     url +=userObj['id']+"&s="+cutString(userObj['fbId'].toString());
-
-    reply+="\n"+url;
-    sendMessage.sendTextMessage(userObj['fbId'], reply);
+    
+    sendMessage.sendUrlButton(userObj['fbId'],url,'Settings', reply);
 }
 
 //helper
