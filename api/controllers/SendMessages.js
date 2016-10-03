@@ -54,7 +54,14 @@ module.exports = {
                 title: articles[i].headline,
                 item_url: articles[i].articleURL,
                 image_url: articles[i].thumbnailURL,
-                subtitle: articles[i].trailText
+                subtitle: articles[i].trailText,
+                buttons:[
+                    {
+                        type: "web_url",
+                        url: articles[i].articleURL,
+                        title: "View in Web"
+                    }
+                ]
             };
             elements[i]=element;
         }
