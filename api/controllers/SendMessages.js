@@ -50,10 +50,14 @@ module.exports = {
         var elements=[];
 
         for (var i=0;i<articles.length; i++){
-            var element = {
+            var thumb = articles[i].thumbnailURL;
+            if(thumb===0){
+                thumb = "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xat1/v/t1.0-9/13516734_1051607708259898_3308929999027179241_n.png?oh=610c593da2028c3cabe718a6059df0c7&oe=58A6071B&__gda__=1484226323_ac278d951f2ce2c05043384eb8c40756";
+            }
+            elements[i]= {
                 title: articles[i].headline,
                 item_url: articles[i].articleURL,
-                image_url: articles[i].thumbnailURL,
+                image_url: thumb,
                 subtitle: articles[i].trailText,
                 buttons:[
                     {
@@ -63,7 +67,6 @@ module.exports = {
                     }
                 ]
             };
-            elements[i]=element;
         }
         request({
             url: url,
