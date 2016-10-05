@@ -107,11 +107,10 @@ function createUser(fbid, callback) {
     getUserProfile(fbid, function (result) {
         if (result) {
             l.d('got callback with data');
-            l.d(result['first_name']);
             var reqObj = {
                 write: {
                     data: {
-                        "fbid": fbid,
+                        "fbId": fbid,
                         "firstname": result['first_name'],
                         "lastname": result['last_name'],
                         "locale": result['locale'],
@@ -124,8 +123,7 @@ function createUser(fbid, callback) {
                 .then(
                 function (response) {
                     //if response success, give user data back TODO
-                    l.d(response);
-                    callback(reqObj.write.data);
+                    callback(reqObj.write.data, response.data.insertId);
                 })
                 .catch(function (error) {
                     l.d(error);
@@ -139,15 +137,15 @@ function createUser(fbid, callback) {
 
 function getUserProfile (fbid, callback) {
     l.d("getting fb date for " + fbid);
-    url = 'https://graph.facebook.com/v2.6/'+fbid+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + fb_page_access_token;
+    furl = 'https://graph.facebook.com/v2.6/'+fbid+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + fb_page_access_token;
     l.d(url);
-    axios.get(url)
+    axios.get(furl)
         .then(
         function (response) {
             callback(response.data)
         })
         .catch(function (error) {
-            l.d(error);
+          //  l.d(error);
         });
 }
 

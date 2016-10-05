@@ -13,9 +13,10 @@ function received(sender, text) {
         }
         else {
             l.d("User not in DB");
-            db.createUser(sender, function (result) {
-                l.d(result['fbid']);
-                decide.dodecide(text, result['fbid'])
+            db.createUser(sender, function (result, id) {
+                l.d(result['fbId']);
+                result.id = id;
+                decide.dodecide(text, result)
             });
         }
     });
