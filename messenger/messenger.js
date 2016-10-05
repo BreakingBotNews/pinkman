@@ -8,10 +8,19 @@ function received(sender, text) {
     /*get user from DB*/
     sendMessage.sendTypingOn(sender);
     db.userByFbId(sender, function (result) {
-        decide.dodecide(text, result.data[0]);
+        if (result.data[0]) {
+            decide.dodecide(text, result.data[0]);
+        }
+        else {
+            l.d("User not in DB");
+            db.createUser(sender, function (result) {
+                l.d(result['fbid']);
+                decide.dodecide(text, result['fbid'])
+            });
+        }
     });
 }
 
 module.exports = {
-    received: received,
+    received: received
 };

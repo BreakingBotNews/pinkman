@@ -4,6 +4,8 @@ var config = require('../../config/config.json');
 
 var url = 'https://bot2.shaula.uberspace.de/heisenberg/api/user?apiKey='+config.apiKey;
 var urlArticle = 'https://bot2.shaula.uberspace.de/heisenberg/api/article?apiKey='+config.apiKey;
+const fb_page_access_token = config.fb_page_access_token;
+
 
 function saveUserPref(sender, field, value){
     console.log("saveUserPref");
@@ -98,10 +100,62 @@ function userByFbId(id, callback) {
 });
 }
 
+function createUser(fbid, callback) {
+    //get info about user from facebook
+    //https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=<PAGE_ACCESS_TOKEN>
+    l.d("creating user");
+    getUserProfile(fbid, function (result) {
+        if (result) {
+            l.d('got callback with data');
+            l.d(result['first_name']);
+            var reqObj = {
+                write: {
+                    data: {
+                        "fbid": fbid,
+                        "firstname": result['first_name'],
+                        "lastname": result['last_name'],
+                        "locale": result['locale'],
+                        "timezone": result['timezone'],
+                        "gender": result['gender']
+                    }
+                }
+            };
+            axios.post(url,reqObj)
+                .then(
+                function (response) {
+                    //if response success, give user data back TODO
+                    l.d(response);
+                    callback(reqObj.write.data);
+                })
+                .catch(function (error) {
+                    l.d(error);
+                });
+        }
+        else {
+            l.d("no callback data");
+        }
+    });
+}
+
+function getUserProfile (fbid, callback) {
+    l.d("getting fb date for " + fbid);
+    url = 'https://graph.facebook.com/v2.6/'+fbid+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + fb_page_access_token;
+    l.d(url);
+    axios.get(url)
+        .then(
+        function (response) {
+            callback(response.data)
+        })
+        .catch(function (error) {
+            l.d(error);
+        });
+}
+
 module.exports = {
     saveUserPref: saveUserPref,
     writeUserMessage: writeUserMessage,
     getSummary: getSummary,
     userById: userById,
-    userByFbId: userByFbId
+    userByFbId: userByFbId,
+    createUser: createUser
 };
