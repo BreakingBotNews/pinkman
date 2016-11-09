@@ -66,10 +66,33 @@ function dodecide(text, user) {
             reply = 'Click this Link to connect to Facebook:';
             send.fbLinkUrlGenerator(user, reply);
             break;
+        case "Get Started":
+            getStarted(user);
+            break;
+        case "Help":
+        case "help":
+        case "Help me":
+        case "help me":
+            //ToDo
+            break;
         default:
             reply = 'I do not understand this: ' + text.substring(0, 200);
             sendMessage.sendTextMessage(user['fbId'], reply);
     }}
+
+function getStarted(user) {
+    var reply;
+    reply = "Welcome to breakingbot.news your personalized news bot.";
+    sendMessage.sendTextMessage(user['fbId'], reply);
+    setTimeout(function () {
+        reply = "You can use the menu in the bottom left corner or written commands to direct me. Please be patient with me, I'm new to my job!";
+        sendMessage.sendTextMessage(user['fbId'], reply);
+    },100);
+    setTimeout(function () {
+        reply = "Please help me personalize your experience. By clicking on the button below, you can grant me permission to use some of your Facebook data. Without it I'm blind..";
+        send.fbLinkUrlGenerator(user, reply);
+    },200);
+}
 
 module.exports = {
     dodecide: dodecide

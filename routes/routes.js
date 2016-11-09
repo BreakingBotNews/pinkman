@@ -37,10 +37,15 @@ router.post('/api/v1/webhook/', function (req, res) {
     for (var i = 0; i < messaging_events.length; i++) {
         var event = req.body.entry[0].messaging[i];
         var sender = event.sender.id;
+        var text;
         if (event.message && event.message.text) {
-            var text = event.message.text;
+            text = event.message.text;
             messenger.received(sender,text)
-            }
+        }
+        if(event.postback){
+            text = event.postback.payload;
+            messenger.received(sender,text)
+        }
     }
     res.sendStatus(200);
 });
