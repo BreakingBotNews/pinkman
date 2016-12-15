@@ -10,6 +10,13 @@ function summary(target,id) {
         sendMessage.sendTemplate(result,target);
 });}
 
+function personalSummary(target, id) {
+    db.getPersonalSummary(id,10,function (result) {
+        result=result.data;
+        sendMessage.sendTemplate(result,target);
+    })
+}
+
 function subscribe(user, reply) {
     console.log(user);
     console.log(db);
@@ -47,6 +54,7 @@ module.exports = {
     subscribe: subscribe,
     stopsubscription: stopsubscription,
     fbLinkUrlGenerator: fbLinkUrlGenerator,
-    settingsUrlGenerator: settingsUrlGenerator
+    settingsUrlGenerator: settingsUrlGenerator,
+    personalSummary: personalSummary
 };
 

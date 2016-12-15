@@ -40,6 +40,10 @@ function dodecide(text, user) {
             console.log(user['id']);
             send.summary(user['fbId'],user['id']);
             break;
+        case 'personal summary':
+            console.log(user['id']);
+            send.personalSummary(user['fbId'],user['id']);
+            break;
         case "start":
         case "Start":
             console.log(user['fbId']);

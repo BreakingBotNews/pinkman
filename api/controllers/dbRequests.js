@@ -44,7 +44,21 @@ function getSummary(sender, length, callback) {
     var obj = {
         summaryRequest: {
             length: length,
-            fbId: sender
+            id: sender, 
+            personal: false
+        }
+    };
+    axios.post(urlArticle,obj).then(function (result) {
+        callback(result);
+    })
+}
+
+function getPersonalSummary(sender,length,callback) {
+    var obj = {
+        summaryRequest: {
+            length: length,
+            id: sender,
+            personal: true
         }
     };
     axios.post(urlArticle,obj).then(function (result) {
@@ -155,5 +169,6 @@ module.exports = {
     getSummary: getSummary,
     userById: userById,
     userByFbId: userByFbId,
-    createUser: createUser
+    createUser: createUser,
+    getPersonalSummary: getPersonalSummary
 };
