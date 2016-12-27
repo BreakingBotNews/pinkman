@@ -45,7 +45,8 @@ function getSummary(sender, length, callback) {
         summaryRequest: {
             length: length,
             id: sender, 
-            personal: false
+            personal: false,
+            combined: false
         }
     };
     axios.post(urlArticle,obj).then(function (result) {
@@ -58,7 +59,22 @@ function getPersonalSummary(sender,length,callback) {
         summaryRequest: {
             length: length,
             id: sender,
-            personal: true
+            personal: true,
+            combined: false
+        }
+    };
+    axios.post(urlArticle,obj).then(function (result) {
+        callback(result);
+    })
+}
+
+function getCombinedSummary(sender,length,callback) {
+    var obj = {
+        summaryRequest: {
+            length: length,
+            id: sender,
+            personal: false,
+            combined: true
         }
     };
     axios.post(urlArticle,obj).then(function (result) {
@@ -170,5 +186,6 @@ module.exports = {
     userById: userById,
     userByFbId: userByFbId,
     createUser: createUser,
-    getPersonalSummary: getPersonalSummary
+    getPersonalSummary: getPersonalSummary,
+    getCombinedSummary: getCombinedSummary
 };
